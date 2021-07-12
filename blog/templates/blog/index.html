@@ -1,0 +1,11 @@
+{% for article in article_list %}
+<ul>
+  <li>
+    <h5><a href="{% url 'blog:detail' article.id %}">{{ article.title }}</a></h5>
+    <p>{{ article.created_at }}
+  </li>
+</ul>
+<img src="{{ article.thumbnail.url }}"> 
+<p>{{ article.description }}
+
+{% endfor %}
