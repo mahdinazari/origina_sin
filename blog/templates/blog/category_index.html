@@ -1,0 +1,11 @@
+{% for category in category_list %}
+<ul>
+  <li>
+    <h5><a href="{% url 'blog:category_detail' category.id %}">{{ category.title }}</a></h5>
+    <p>{{ category.status }}
+  </li>
+</ul>
+<p>{{ category.position }}
+<hr>
+{% endfor %}
+
