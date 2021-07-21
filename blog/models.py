@@ -1,6 +1,13 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import format_html
+from django.contrib.auth.models import User
+
+
+#class CategoryManager(models.Model):
+#    def active(self):
+#        return self.objects.filter(status==True)
 
 
 class Category(models.Model):
@@ -56,6 +63,13 @@ class Article(models.Model):
         verbose_name='وضعیت'
     )
 
+    author = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='articles',
+        verbose_name='نویسنده'
+    )
     category = models.ManyToManyField(Category, related_name='articles')
 
     class Meta:
@@ -67,7 +81,12 @@ class Article(models.Model):
         return self.title
 
     def get_thumbnail(self):
-        return format_html("<img src='{}' with=40 height=40'>".format(self.thumbnail.url))
+        return format_html(
+            "<img src='{}' with=40 height=40'>".format(self.thumbnail.url)
+        )
+
+    def get_absolute_url(self):
+        return reverse("blog:index")
 
     get_thumbnail.short_description = 'تصویر'
 

@@ -7,22 +7,27 @@ from .models import Article, Category
 
 def make_publish(modeladmin, request, queryset):
     updated = queryset.update(status='p')
-
-    modeladmin.message_user(request, ngettext(
-    '%d story was successfully marked as published.',
-    '%d stories were successfully marked as published.',
-    updated,
-) % updated, messages.SUCCESS)
+    modeladmin.message_user(
+        request,
+        ngettext(
+            '%d story was successfully marked as published.',
+            '%d stories were successfully marked as published.',
+            updated,
+        ) % updated, messages.SUCCESS
+    )
 
 make_publish.short_description = 'انتشار مقاله'
 
 def make_dtaft(modeladmin, request, queryset):
     updated = queryset.update(status='d')
-    modeladmin.message_user(request, ngettext(
-    '%d story was successfully marked as published.',
-    '%d stories were successfully marked as published.',
-    updated,
-) % updated, messages.SUCCESS)
+    modeladmin.message_user(
+        request,
+        ngettext(
+            '%d story was successfully marked as published.',
+            '%d stories were successfully marked as published.',
+            updated,
+        ) % updated, messages.SUCCESS
+    )
 
 make_dtaft.short_description = 'پیش نویس کردن مقاله'
 
@@ -33,10 +38,11 @@ class Article(admin.ModelAdmin):
         'title',
         'status',
         'publish',
+        'author',
         'categories_list',
         'get_thumbnail'
     )
-    list_filter = ('status', 'publish')
+    list_filter = ('status', 'publish', 'author')
     search_fields = ('title', 'description')
     prepopulated_fields = {'slug': ('title',)}
     ordering = ['-created_at', 'publish']

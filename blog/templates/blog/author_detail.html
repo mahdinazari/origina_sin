@@ -1,0 +1,20 @@
+{% for author in object_list %}
+<p>{{ author.title }}</p>
+<p>{{ author.description }}</p>
+<p>{{ author.publish }}</p>
+<p>{{ author.author.get_full_name }}
+<hr>
+{% endfor %}
+
+{% if is_paginated %}
+  {% if page_obj.has_previous %}
+    <a href="{% url 'blog:author-detail' author.username %}?page={{ page_obj.previous_page_number }}">Previous</a>&nbsp;&nbsp; &nbsp; &nbsp; 
+  {% endif %}
+  
+  {% if page_obj.has_next %}
+    <a href="{% url 'blog:author-detail' author.username %}?page={{ page_obj.next_page_number }}">Next</a>
+  {% endif %}
+{% endif %}
+
+<br>
+<br>
